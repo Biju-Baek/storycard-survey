@@ -1,36 +1,111 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Storycard Survey
+
+A lightweight, interaction-driven survey tool that presents one question at a time through visually guided cards, inspired by Duolingo's learning flow.
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+- Node.js 16+
+- npm or yarn
+
+### 1. Setup Database
+
+Create a free Supabase project:
+1. Go to https://supabase.com and sign up
+2. Create a new project
+3. Go to Settings → Database → Connection String
+4. Copy the connection string (ensure you select "Prisma" mode)
+5. Add to `.env`:
+```bash
+DATABASE_URL="postgresql://[user]:[password]@[host]:[port]/[database]"
+```
+
+### 2. Initialize Database
+
+```bash
+npx prisma migrate dev --name init
+```
+
+This creates all tables from the schema.
+
+### 3. Run Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+app/
+  api/              # API routes
+  components/       # React components
+  (auth)/           # Auth pages
+  (creator)/        # Creator dashboard
+  (participant)/    # Survey taker
+  layout.tsx        # Root layout
+  page.tsx          # Landing page
+  globals.css       # Tailwind CSS
 
-## Learn More
+lib/
+  prisma.ts         # Prisma client
+  types.ts          # TypeScript types
 
-To learn more about Next.js, take a look at the following resources:
+prisma/
+  schema.prisma     # Database schema
+  migrations/       # Database migrations
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Available Scripts
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npx prisma studio` - Open Prisma Studio (database GUI)
 
-## Deploy on Vercel
+## Database Schema
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+See `CLAUDE.md` for detailed schema documentation.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## MVP Roadmap
+
+- [ ] Authentication (creator accounts)
+- [ ] Survey builder UI
+- [ ] Survey taker flow (card-based)
+- [ ] Response dashboard
+- [ ] CSV export
+- [ ] Analytics charts
+- [ ] Share survey links
+
+## Deployment
+
+### Deploy to Vercel (Recommended)
+
+```bash
+npm install -g vercel
+vercel
+```
+
+### Deploy to Render
+
+1. Push code to GitHub
+2. Create new Web Service on Render
+3. Connect your GitHub repo
+4. Set `DATABASE_URL` environment variable
+5. Deploy
+
+## Tech Stack
+
+- **Frontend**: Next.js 16, React, TypeScript, Tailwind CSS
+- **Backend**: Next.js API Routes
+- **Database**: PostgreSQL (Supabase)
+- **ORM**: Prisma
+- **Charts**: Recharts
+- **Auth**: NextAuth.js (coming soon)
+
+## License
+
+MIT
